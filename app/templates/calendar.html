@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Setting the title of the web page -->
+    <title>Your Monthly Planner</title>
+    <!-- Linking to the stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header section -->
+        <header>
+            <h1 id="page-title">Your Monthly Planner</h1>
+        </header>
+        <main>
+            <!-- Navigation for months -->
+            <div id="calendar-navigation">
+                <!-- Displaying the previous month link if available -->
+                {% if prev_month %}
+                    <a href="{{ url_for('calendar', year=prev_month[0], month=prev_month[1]) }}" class="nav-button">Previous</a>
+                {% endif %}
+                <!-- Displaying the current month and year -->
+                <span class="current-month">{{ current_month }}/{{ current_year }}</span>
+                <!-- Displaying the next month link if available -->
+                {% if next_month %}
+                    <a href="{{ url_for('calendar', year=next_month[0], month=next_month[1]) }}" class="nav-button">Next</a>
+                {% endif %}
+            </div>
+
+
+            <div id="calendar">
+                <!-- Loop through each month -->
+                <table>
+                    <thead>
+                        <!-- Table headers for days of the week -->
+                        <tr>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                            <th>Sun</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if deadlines %}
+                            <!-- Loop through each week with deadlines-->
+                            {% for week in deadlines %}
+                            <tr>
+                                <!-- Loop through each day -->
+                                {% for day in week %}
+                                <td>
+                                    {% if day.date %}
+                                    <!-- Displaying the date and task -->
+                                    <strong>{{ day.date }}</strong><br>
+                                    {{ day.task  or 'None'}}
+                                    {% else %}
+                                    <!-- Empty cell for days with no tasks -->
+                                    &nbsp;
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <!--Rendering empty calendar if no deadlines present-->
+                            {% for week in range(5) %}
+                            <tr>
+                                {% for day in range(7) %}
+                                <td>&nbsp;</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- Adding the Task Button -->
+            <button id="add-task-button">+ Add Task</button>
+ 
+            <!-- Modal for adding tasks -->
+            <div id="task-modal" class="modal">
+                <div class="modal-cont">
+                    <h3>Add Task</h3>
+                    <form id="add-task-form">
+
+                        <!-- Input for task name -->
+                        <label for="task-name">Task Name</label>
+                        <input type="text" id="task-name" name="task-name" required>
+
+                        <!-- Input for task date -->
+                        <label for="task-date">Date</label>
+                        <input type="date" id="task-date" name="task-date" required>
+
+                        <!-- Buttons for saving or canceling -->
+                        <button type="submit">Save</button>
+                        <button type="button" id="cancel-task-button">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        // Showing up the Add Task Modal
+        const addTaskButton = document.getElementById('add-task-button');
+        const taskModal = document.getElementById('task-modal');   
+        const cancelTaskButton = document.getElementById('cancel-task-button');
+        
+        // Displaying the block on clicking the Add Task Button
+        addTaskButton.addEventListener('click', () => {
+            taskModal.style.display = 'block';
+        });
+
+        // Removing the block on clicking the Cancel Button
+        cancelTaskButton.addEventListener('click', () => {
+            taskModal.style.display = 'none';
+        });
+
+        // Handling form submission
+        const taskForm = document.getElementById('add-task-form');
+        taskForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const taskName = document.getElementById('task-name').value;
+            const taskDate = document.getElementById('task-date').value;
+ 
+            // Logging task details and hiding the modal
+            console.log(`Task: ${taskName}, Date: ${taskDate}`);
+            taskModal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
