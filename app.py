@@ -44,6 +44,8 @@ def allowed_file_check(filename):
     # Checking if the extracted extension is in the allowed extensions
     return extension in ALLOWED_EXTEN
 
+## File Upload Route
+
 # Setting route for uploading the file with both GET(to load the page) and POST(to handle the uploads) HTTP methods
 @app.route('/', methods = ['GET', 'POST'])
 def file_upload():
@@ -134,6 +136,101 @@ def file_upload():
 
     # When the file is successfully processed, the html page is rendered with the extracted years
     return render_template('index.html', years=years)
+
+
+
+
+
+### Calendar Displays
+
+## Calendar function:
+# Function to make calendar
+
+def make_calendar(deadlines):
+    """Function to generate a monthly calendar with tasks based on the deadlines in the calendar. 
+    
+    Arguments:
+       deadlines (list of dictionary): A list of dictionary where each dictionary is for a deadline.
+       They keys are: 'date' (string in ""YYY-MM-DD") and 'task' (string).
+    
+    Return:
+       calendars (dict) : A dictionary where keys are (year,month) tuples and values are calendars for each month.
+       Each calendar is a list of weeks.
+       Each week is a list of days with the tasks.
+    """
+    
+    from collections import defaultdict
+    import calendar
+
+    # Deadlines by month
+    deadlines_by_month = defaultdict(list)
+
+    # Iterating through the deadlines and extracting the date of each task
+    for deadline in deadlines:
+        task_date = deadline["date"]
+        
+        # Validating and converting the dates to a datetime.date object
+        try:
+            # Ensure the date is a string before converting
+            if isinstance(task_date, str):
+                task_date_obj = datetime.strptime(task_date, "%Y-%m-%d").date()
+            elif isinstance(task_date, datetime):
+                task_date_obj = task_date
+            else:
+                    # Skip if the date format is invalid
+                continue
+            
+            # Grouping deadlines by month and appending the tasks to the corresponding list
+            year_month = (task_date_obj.year, task_date_obj.month)
+            deadlines_by_month[year_month].append({
+                "date": task_date_obj,
+                "task": deadline["task"]
+            })
+        
+        except Exception as e:
+            print(f"Skipping invalid date: {task_date} with error: {e}")
+            continue
+    
+    # Initialising the monthly calendar
+    calendars = {}
+    for year_month, tasks in deadlines_by_month.items():
+        year, month = year_month
+        month_calendar = []  # Calendar for this month
+        week = [{"date": None, "task": None} for _ in range(7)]
+
+        # Determine the first and last days of the month and adjusting for transitions
+        first_day = datetime(year, month, 1).date()
+        if month < 12:
+            last_day = datetime(year, month + 1, 1).date() - timedelta(days=1)
+        else:  # Handle December separately
+            last_day = datetime(year + 1, 1, 1).date() - timedelta(days=1)
+
+
+        # Fill in the days of the month
+        current_date = first_day
+        while current_date <= last_day:
+            day_index = current_date.weekday()  # Monday=0, Sunday=6
+
+            # Find a task for the current date, if any
+            task = next((d["task"] for d in tasks if d["date"] == current_date), None)
+            week[day_index] = {"date": current_date.strftime("%Y-%m-%d"), "task": task}
+
+            # If the week is complete, add it to the calendar
+            if day_index == 6:
+                month_calendar.append(week)
+                week = [{"date": None, "task": None} for _ in range(7)]
+
+            current_date += timedelta(days=1)
+
+        # Add the remaining week if it contains any dates
+        if any(day["date"] for day in week):
+            month_calendar.append(week)
+
+        # Add the month's calendar to the result
+        calendars[year_month] = month_calendar
+
+    return(calendars)
+
 
 
 
