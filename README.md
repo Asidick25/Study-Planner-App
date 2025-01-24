@@ -12,6 +12,7 @@ Key features include:
 The app will allow students to balance their apprenticeship requirements and assignments together with work and personal commitments.
 
 ## The Project Roadmap
+![image](https://github.com/user-attachments/assets/7fce0552-001b-406b-a5ae-07b62b792e23)
 
 ## Requirements
 
