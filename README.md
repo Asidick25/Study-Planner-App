@@ -83,6 +83,8 @@ User stories are ways of defining the features of the app from the perspective o
    So that my schedule can be updated without re-uploading the whole timetable.
    
 ## Stakeholders
+![image](https://github.com/user-attachments/assets/ace522bd-c6da-4951-b447-9704a6c46034)
+
 
 ## Risks
 
