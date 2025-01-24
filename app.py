@@ -232,7 +232,72 @@ def make_calendar(deadlines):
     return(calendars)
 
 
+## Calendar Route:
 
+@app.route('/calendar')
+def calendar():
+    # Get the selected year
+    sel_year = request.args.get('year')
+    sel_month = request.args.get('month')
+
+    # Get deadlines from the session
+    deadlines = session.get('deadlines', [])
+
+    # Filter deadlines for the selected year
+    sel_year_deadlines = [
+        {"date": deadline["date"], "task": deadline["task"]}
+        for deadline in deadlines
+        if deadline["year"] == sel_year
+    ]
+
+    if not sel_year_deadlines:
+        return render_template('calendar.html', deadlines=[], error="No tasks for the selected year.")
+
+    # Generate the calendar grouped by month using the make_calendar function
+    deadlines_by_month = make_calendar(sel_year_deadlines)
+
+    # Get the calendar for the selected month
+    if sel_month:
+        try:
+            sel_month = int(sel_month)
+        except:
+            sel_month = None
+
+        selected_calendar = deadlines_by_month.get((int(sel_year), sel_month), [])
+    else:
+        # Default to the first month with tasks if no month is specified
+        first_month = min(deadlines_by_month.keys(), default=None)
+        if first_month:
+            sel_year, sel_month = first_month
+            selected_calendar = deadlines_by_month[first_month]
+        else:
+            sel_year = None
+            sel_month = None
+            selected_calendar = []
+
+    if not selected_calendar:
+        # Create a blank calendar for the selected month
+        selected_calendar = [[]]
+
+    # Make navigation links
+    months_with_data = sorted(deadlines_by_month.keys())
+
+    try:
+        current_index = months_with_data.index((sel_year, sel_month))
+        prev_month = months_with_data[current_index - 1] if current_index > 0 else None
+        next_month = months_with_data[current_index + 1] if current_index < len(months_with_data) - 1 else None
+    except ValueError:
+        prev_month, next_month = None, None
+
+
+    return render_template(
+        'calendar.html',
+        deadlines=selected_calendar,
+        current_month=sel_month,
+        current_year=sel_year,
+        prev_month=prev_month,
+        next_month=next_month,
+    )
 
 
 if __name__ == "__main__":
