@@ -1,6 +1,15 @@
 # Project Overview
 
 ## Project Introduction
+This project is a user-friendly web-based application that is designed to help NCH Apprentices organise their yearly schedules effectively. The app allows the users to upload their timetables provided to them in the induction, visualise all the deadlines on an interactive calendar, and manage their time effectively. With an interactive, accessible and modern design, the study planner app aims to enhance the productivity of apprentices and reduce the stress associated in planning multiple deadlines. 
+
+Key features include:
+- Timetable upload feature where users can upload their timetables as a `.csv` or `.xlsx` file.
+- An interactive monthly calendar that displays all the tasks and deadlines.
+- Task Addition Feature to add new tasks directly into the calendars.
+- Naviagtion for viewing deadlines across various months and years.
+
+The app will allow students to balance their apprenticeship requirements and assignments together with work and personal commitments.
 
 ## The Project Roadmap
 
