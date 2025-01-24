@@ -57,7 +57,31 @@ The app will allow students to balance their apprenticeship requirements and ass
    - Prevent the upload of malicious scripts by santising the user inputs.
 
 ## User Stories
+User stories are ways of defining the features of the app from the perspective of the end-user. As they help to make the development user-centered, I made a few user stories based on the interaction with stakeholders. They are as below:
+1. **Uploading Timetable:**
 
+   As a student,
+
+   I want to upload my timetable on the app
+
+   So that I can track and visualise all my deadlines.
+
+3. **Viewing tasks on calendar:**
+   
+   As a student,
+
+   I want to view all my deadlines and tasks on a calendar
+
+   So that my schedule can be managed more effectively.
+
+5. **Adding new tasks**:
+   
+   As a student,
+
+   I want to be able to add new tasks to the calendar
+
+   So that my schedule can be updated without re-uploading the whole timetable.
+   
 ## Stakeholders
 
 ## Risks
