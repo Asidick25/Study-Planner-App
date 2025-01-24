@@ -13,3 +13,80 @@
     <!--Title of the page-->
     <title>Study Planner</title>
 </head>
+<body>
+        <!--The body of the HTML doc-->
+
+        <!--A container divider for organising the content on the page-->
+        <div class="container">
+                <!--Header-->
+                <header>
+                        <!--Defining the header and title of the app-->
+                        <h1>Study Planner</h1>
+                </header>
+
+                <!--Main Content-->
+                <main>
+
+                        <!--Left side of page: Girl Picture
+                        <div class="girl_illustration">
+                                <img src="{{url_for('static', filename='images/girl.png') }}" alt="Girl studying">
+                        </div>-->
+
+
+                        <!--Center image: Laptop-->
+                        <div class="main_content">
+                                <img src="{{url_for('static', filename='images/laptop.png') }}" alt="Laptop">
+                        </div>
+
+                        <!--Bottom Section: Upload Timetable button-->
+                        <div class="upload_section">
+                                <!--File Upload Section-->
+                                <section id="upload">
+                                        <h2>Upload Your Timetable</h2>
+                                        <!--Form for uploading the files-->
+                                        <form method="POST" enctype="multipart/form-data">
+                                                <!--Label for the file input-->
+                                                <label for="file">Select your Timetable</label>
+                                                <!--File input field-->
+                                                <input type="file" name="file" id="file" accept=".csv, .xlsx">
+                                                <!--Submit Button-->
+                                                <button type="submit">Upload</button>
+                                        </form>
+                                </section>
+
+                                <!--checking if the variable years exists-->
+                                {% if years %}
+                                <!--Creating a section for the year selection-->
+                                <section id="year_selector">
+                                        <!--Adding the heading of the drop-down menu-->
+                                        <h3>Select a Year</h3>
+                                        <!--Creating a form that will send the data to the next page for the calendars-->
+                                        <form method="GET" action="/calendar">
+                                                <!--Creating a drop_down menu-->
+                                                <select name="year" id="year">
+                                                        <!--Iterating through each item in the years variable-->
+                                                        {% for year in years%}
+                                                        <!--Creating an option for each year in the drop-down menu-->
+                                                        <option value="{{ year }}">{{ year }}</option>
+                                                        <!--Ending the for loop-->
+                                                        {% endfor %}
+                                                </select>
+                                                <!--Buttom that sends the selection data to the next page-->
+                                                <button type="submit">Continue</button>
+                                        </form>
+                                </section>
+                                {% endif %}
+
+                                {% if error %}
+                                <p style="color: red;">{{ error }}</p>
+                                {% endif %}
+
+
+                        </div>
+
+
+                </main>
+        </div>
+</body>
+</html>
+
