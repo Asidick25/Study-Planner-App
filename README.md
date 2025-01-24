@@ -85,8 +85,9 @@ User stories are ways of defining the features of the app from the perspective o
 ## Stakeholders
 ![image](https://github.com/user-attachments/assets/ace522bd-c6da-4951-b447-9704a6c46034)
 
-
 ## Risks
+To access the potential risks that may come up in the process, I made the risk matrix below that allows me to make a list of all potential risks and think of strategies to mitigate them.
+![image](https://github.com/user-attachments/assets/eaa9410b-cb46-479b-8eda-f140acf4b0f0)
 
 # Project Management
 
