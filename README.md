@@ -15,6 +15,46 @@ The app will allow students to balance their apprenticeship requirements and ass
 ![image](https://github.com/user-attachments/assets/7fce0552-001b-406b-a5ae-07b62b792e23)
 
 ## Requirements
+### Functional Requirements 
+1. User Interface (UI)
+   - Timetable Upload:
+     Users should have an input field to be able to upload their timetable files as CSV or XLSX.
+   - File Validation:
+     Users receive information about the invalid file types during the upload.
+   - Calendar Display:
+     A calendar view should be displayed with the tasks and their corresponding deadlines.
+   - Task Management:
+     The ability for the users to add, edit or delete tasks from the calendar using the 'SAVE' or 'CANCEL' buttons.
+   - Monthly Navigation:
+     Users have the ability to navigate between months using the 'Previous' and 'Next' buttons at the top of the calendar.
+
+2. Timetable Data
+   - File Processing:
+     Retrival of information like the deadlines and dates from the uploaded timetables.
+   - Dynamic Updates:
+     Users are able to update the tasks without refreshing the page.
+
+3. Validation
+   - File Validation:
+     Ensure the uploaded files have a specific format and columns.
+
+4. Error Handling
+   - Upload Errors:
+     Display of user-friendly messages to the upload of unsupported file formats.
+
+### Non-functional Requirements
+1. Performance
+   - The calendar naviagtion between the months and task additions should load up between 1-2 seconds.
+   - The app has the ability to handle multiple uploads without a delay.
+  
+2. Responsive Design
+   - Ensure the app works smoothly on desktops, tablets and mobile devices.
+  
+3. Accessibility
+   - Ensure screen reader compatibilty and a accessible colour scheme for visually impaired users
+  
+4. Security
+   - Prevent the upload of malicious scripts by santising the user inputs.
 
 ## User Stories
 
